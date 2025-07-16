@@ -1,22 +1,33 @@
 Feature: Registrar usuario
 
+  Background:
+    * def login = call read('classpath:bdd/auth/loginAuth.feature@login')
+    * print login
+    * def access_token = login.access_token
+    * print access_token
 
   Scenario: CP-01 Registrar usuario
     Given url urlBase
     And path 'api/register'
     And header Accept = 'application/json'
-    And header Authorization = 'Bearer 161|gLTSveTBJXcFBfRdJUyfGaAQBqcnEtSUdCJKBKSb'
+    And header Authorization = 'Bearer ' + access_token
     And request read('bodyRegister.json')
+    * def arch = read('bodyRegister.json')
+    * print arch
+    * def nombre = arch.nombre
+    * def correo = arch.email
     When method post
     Then status 200
-    * print response.access_token
-    * def access_token = response.access_token
+    And match response.data.nombre == nombre
+    And match response.data.email == correo
+    And match response.data.estado == 1
+
 
   Scenario Outline: CP-02 Generacion por outline
     Given url urlBase
     And path 'api/register'
     And header Accept = 'application/json'
-    And header Authorization = 'Bearer 161|gLTSveTBJXcFBfRdJUyfGaAQBqcnEtSUdCJKBKSb'
+    And header Authorization = 'Bearer ' + access_token
     And request
     """
     {
@@ -29,19 +40,24 @@ Feature: Registrar usuario
     """
     When method post
     Then status 200
+    * def correo = "<email>"
+    * def nombre  = "<nombre>"
+    And match response.data.nombre == nombre
+    And match response.data.email == correo
+    And match response.data.estado == 1
 
     Examples:
       | email |  password | nombre | tipo_usuario_id|estado|
-      |paolatest1@gmail.com     |123456         |Paola        |1|1      |
-      |karentest1@gmail.com     |123456         |Karen        |1|1      |
-      |ceciliatest1@gmail.com   |123456         |Cecilia      |1|1      |
+      |paolatest4@gmail.com     |12345678         |Paola        |1|1      |
+      |karentest4@gmail.com     |12345678         |Karen        |1|1      |
+      |ceciliatest4@gmail.com   |12345678         |Cecilia      |1|1      |
 
 
-  Scenario: CP Registrar usuario - Validacion de campo email requerido
+  Scenario: CP-03  Registrar usuario - Validacion de campo email requerido
     Given url urlBase
     And path 'api/register'
     And header Accept = 'application/json'
-    And header Authorization = 'Bearer 161|gLTSveTBJXcFBfRdJUyfGaAQBqcnEtSUdCJKBKSb'
+    And header Authorization = 'Bearer ' + access_token
     And request
     """
     {
@@ -53,15 +69,15 @@ Feature: Registrar usuario
     """
     When method post
     Then status 500
-    * print response
-    And response.message = "The email field is required."
+    And match response.email == ["The email field is required."]
 
 
-  Scenario: CP Registrar usuario - Validacion de campo email no puede ser null
+  Scenario: CP-04 Registrar usuario - Validacion de campo email no puede ser null
     Given url urlBase
     And path 'api/register'
     And header Accept = 'application/json'
-    And header Authorization = 'Bearer 161|gLTSveTBJXcFBfRdJUyfGaAQBqcnEtSUdCJKBKSb'
+    And header Authorization = 'Bearer ' + access_token
+    * print access_token
     And request
     """
     {
@@ -74,6 +90,4 @@ Feature: Registrar usuario
     """
     When method post
     Then status 500
-    * print response
-    And response.message = "The email field is required."
-
+    And match response.email == ["The email field is required."]

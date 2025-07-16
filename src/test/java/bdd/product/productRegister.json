@@ -1,11 +1,11 @@
 {
-  "codigo": "K0001",
-  "nombre": "Mouse",
-  "medida": "UND ",
-  "marca": "Logitech",
-  "categoria": "Accesorios",
-  "precio": "28.00",
+  "codigo": "K00011",
+  "nombre": "Llanta repuesto Nissan 11",
+  "medida": "UND",
+  "marca": "Generico",
+  "categoria": "Repuestos",
+  "precio": "3500",
   "stock": "100",
   "estado": "1",
-  "descripcion": "Mouse inalámbrico color negro"
+  "descripcion": "Llanta repuesto Nissan 11"
 }
