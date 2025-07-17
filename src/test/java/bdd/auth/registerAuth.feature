@@ -48,9 +48,9 @@ Feature: Registrar usuario
 
     Examples:
       | email |  password | nombre | tipo_usuario_id|estado|
-      |paolatest4@gmail.com     |12345678         |Paola        |1|1      |
-      |karentest4@gmail.com     |12345678         |Karen        |1|1      |
-      |ceciliatest4@gmail.com   |12345678         |Cecilia      |1|1      |
+      |paolatest5@gmail.com     |12345678         |Paola        |1|1      |
+      |karentest5@gmail.com     |12345678         |Karen        |1|1      |
+      |ceciliatest5@gmail.com   |12345678         |Cecilia      |1|1      |
 
 
   Scenario: CP-03  Registrar usuario - Validacion de campo email requerido

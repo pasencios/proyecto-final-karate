@@ -20,8 +20,8 @@ Feature: Loguear usuario
     And path 'api/login'
     And header Content-Type = 'application/json'
     And header Accept = 'application/json'
-    And request read('bodylogin.json')
-    * def arch = read('bodylogin.json')
+    And request read('bodyLogin.json')
+    * def arch = read('bodyLogin.json')
     * print arch
     * def correo = arch.email
     When method post
